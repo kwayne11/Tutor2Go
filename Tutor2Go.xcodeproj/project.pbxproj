@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A2C7C5E1C2C7634008C891A /* UserHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2C7C5D1C2C7634008C891A /* UserHomeViewController.swift */; };
+		0A4F97651C2A7BC00017DB02 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A4F97641C2A7BC00017DB02 /* Default-568h@2x.png */; };
+		0A84558C1C2A2D53000C221F /* RegisterPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A84558B1C2A2D53000C221F /* RegisterPageViewController.swift */; };
+		0A955D9F1C2A555D00D499DB /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A955D9E1C2A555D00D499DB /* LoginViewController.swift */; };
 		0ACB11521C26F2F800056AA7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACB11511C26F2F800056AA7 /* AppDelegate.swift */; };
 		0ACB11541C26F2F800056AA7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACB11531C26F2F800056AA7 /* ViewController.swift */; };
 		0ACB11571C26F2F800056AA7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0ACB11551C26F2F800056AA7 /* Main.storyboard */; };
@@ -35,6 +39,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A2C7C5D1C2C7634008C891A /* UserHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserHomeViewController.swift; sourceTree = "<group>"; };
+		0A4F97641C2A7BC00017DB02 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		0A84558B1C2A2D53000C221F /* RegisterPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterPageViewController.swift; sourceTree = "<group>"; };
+		0A955D9E1C2A555D00D499DB /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		0ACB114E1C26F2F800056AA7 /* Tutor2Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tutor2Go.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0ACB11511C26F2F800056AA7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0ACB11531C26F2F800056AA7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -79,6 +87,7 @@
 		0ACB11451C26F2F800056AA7 = {
 			isa = PBXGroup;
 			children = (
+				0A4F97641C2A7BC00017DB02 /* Default-568h@2x.png */,
 				0ACB11501C26F2F800056AA7 /* Tutor2Go */,
 				0ACB11681C26F2F800056AA7 /* Tutor2GoTests */,
 				0ACB11731C26F2F800056AA7 /* Tutor2GoUITests */,
@@ -106,6 +115,9 @@
 				0ACB115D1C26F2F800056AA7 /* LaunchScreen.storyboard */,
 				0ACB11601C26F2F800056AA7 /* Info.plist */,
 				0ACB11581C26F2F800056AA7 /* Tutor2Go.xcdatamodeld */,
+				0A84558B1C2A2D53000C221F /* RegisterPageViewController.swift */,
+				0A955D9E1C2A555D00D499DB /* LoginViewController.swift */,
+				0A2C7C5D1C2C7634008C891A /* UserHomeViewController.swift */,
 			);
 			path = Tutor2Go;
 			sourceTree = "<group>";
@@ -236,6 +248,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0ACB115F1C26F2F800056AA7 /* LaunchScreen.storyboard in Resources */,
+				0A4F97651C2A7BC00017DB02 /* Default-568h@2x.png in Resources */,
 				0ACB115C1C26F2F800056AA7 /* Assets.xcassets in Resources */,
 				0ACB11571C26F2F800056AA7 /* Main.storyboard in Resources */,
 			);
@@ -262,8 +275,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A2C7C5E1C2C7634008C891A /* UserHomeViewController.swift in Sources */,
+				0A84558C1C2A2D53000C221F /* RegisterPageViewController.swift in Sources */,
 				0ACB115A1C26F2F800056AA7 /* Tutor2Go.xcdatamodeld in Sources */,
 				0ACB11541C26F2F800056AA7 /* ViewController.swift in Sources */,
+				0A955D9F1C2A555D00D499DB /* LoginViewController.swift in Sources */,
 				0ACB11521C26F2F800056AA7 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -404,10 +420,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Tutor2Go/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ECU.Tutor2Go;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -415,10 +434,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Tutor2Go/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ECU.Tutor2Go;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -489,6 +511,7 @@
 				0ACB117B1C26F2F800056AA7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0ACB117C1C26F2F800056AA7 /* Build configuration list for PBXNativeTarget "Tutor2GoTests" */ = {
 			isa = XCConfigurationList;
@@ -497,6 +520,7 @@
 				0ACB117E1C26F2F800056AA7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0ACB117F1C26F2F800056AA7 /* Build configuration list for PBXNativeTarget "Tutor2GoUITests" */ = {
 			isa = XCConfigurationList;
@@ -505,6 +529,7 @@
 				0ACB11811C26F2F800056AA7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
