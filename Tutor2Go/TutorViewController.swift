@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class TutorViewController: UIViewController {
     
    // MARK: Properties
 
@@ -24,6 +24,12 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
   
+    @IBAction func LogoutButtonTapped(sender: AnyObject) {
+        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isUserLoggedIn")
+        NSUserDefaults.standardUserDefaults().synchronize()
+        
+        self.performSegueWithIdentifier("LoginViewSegue", sender: self);
+    }
 
     override func viewDidAppear(animated: Bool) {
         let isUserLoggedIn = NSUserDefaults.standardUserDefaults().boolForKey("isUserLoggedIn")
@@ -31,10 +37,10 @@ class ViewController: UIViewController {
         {
             self.performSegueWithIdentifier("LoginViewSegue", sender: self);
         }
-        else
-        {
-            self.performSegueWithIdentifier("UserHomeSegue", sender: self);
-        }
+        //else
+        //{
+        //    self.performSegueWithIdentifier("UserHomeSegue", sender: self);
+        //}
     }
 }
 

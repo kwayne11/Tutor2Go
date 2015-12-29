@@ -30,9 +30,7 @@ class UserHomeViewController: UIViewController {
             self.performSegueWithIdentifier("LoginViewSegue", sender: self);
         }
     }
-    
-    @IBAction func ReturnToUserHomeViewController(segue:UIStoryboardSegue) {
-    }
+
 
     @IBAction func LogoutButtonTapped(sender: AnyObject) {
         NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isUserLoggedIn")

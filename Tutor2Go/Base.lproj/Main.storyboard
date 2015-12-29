@@ -5,11 +5,11 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Tutor View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Tutor2Go" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="TutorViewController" customModule="Tutor2Go" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -17,55 +17,34 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XoN-Sv-8Lm">
+                                <rect key="frame" x="0.0" y="0.0" width="63" height="30"/>
+                                <state key="normal" title="Logout"/>
+                                <connections>
+                                    <action selector="LogoutButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9Mb-nb-ZlC"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Welcome" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g01-xw-LTZ">
+                                <rect key="frame" x="20" y="20" width="374" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="560914_10151254400694026_1505727048_n.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="SJ8-gM-GA7">
+                                <rect key="frame" x="87" y="49" width="240" height="128"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="dTE-8K-0lu"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <segue destination="64L-w1-VbB" kind="presentation" identifier="LoginViewSegue" id="7Tz-xK-r4Z"/>
-                        <segue destination="xB2-wk-NOW" kind="presentation" identifier="UserHomeSegue" id="Zdb-hZ-Wv9"/>
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="537" y="296"/>
-        </scene>
-        <!--User Home View Controller-->
-        <scene sceneID="ALx-Tv-8y3">
-            <objects>
-                <viewController id="xB2-wk-NOW" customClass="UserHomeViewController" customModule="Tutor2Go" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="NDA-d4-YHb"/>
-                        <viewControllerLayoutGuide type="bottom" id="bTY-Kk-SlU"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="7Yz-1H-xKC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HOz-jY-tPc">
-                                <rect key="frame" x="0.0" y="0.0" width="65" height="30"/>
-                                <state key="normal" title="Logout"/>
-                                <connections>
-                                    <action selector="LogoutButtonTapped:" destination="xB2-wk-NOW" eventType="touchUpInside" id="dBH-tR-03t"/>
-                                    <segue destination="BYZ-38-t0r" kind="presentation" identifier="LogoutSegue" id="zQA-Ts-tx9"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Welcome" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="20A-RZ-M3K">
-                                <rect key="frame" x="20" y="34" width="366" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CaE-ne-JPL">
-                                <rect key="frame" x="20" y="63" width="366" height="163"/>
-                            </imageView>
-                        </subviews>
-                        <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7uj-Hg-A7m" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="419" y="1253"/>
+            <point key="canvasLocation" x="537" y="276"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="9qy-QY-hLh">
@@ -247,10 +226,10 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bfL-xq-ZXL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-67" y="296"/>
+            <point key="canvasLocation" x="-96" y="276"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="zQA-Ts-tx9"/>
-    </inferredMetricsTieBreakers>
+    <resources>
+        <image name="560914_10151254400694026_1505727048_n.jpg" width="960" height="550"/>
+    </resources>
 </document>
