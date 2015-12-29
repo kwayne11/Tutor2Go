@@ -25,6 +25,8 @@ class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func ReturnToLoginViewController(segue:UIStoryboardSegue) {
+    }
 
     @IBAction func onLoginButtonTapped(sender: AnyObject) {
         let userEmail = userEmailTextField.text;
@@ -35,72 +37,75 @@ class LoginViewController: UIViewController {
         {
             displayMyAlertMessage("Please fill in both the Pirate ID and Password!")
         }
-        
-        let myURL = NSURL(string: "http://40.78.144.135/login.php");
-        let request = NSMutableURLRequest(URL: myURL!);
-        request.HTTPMethod = "POST";
-        
-        let postString = "username=\(userEmail!)&password=\(userPassword!)";
-        request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding);
-        
-        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
-            (data, response, error) in
+        else
+        {
+            let myURL = NSURL(string: "http://40.78.144.135/login.php");
+            let request = NSMutableURLRequest(URL: myURL!);
+            request.HTTPMethod = "POST";
             
-            if (error != nil)
-            {
-                print("error=\(error)")
-                return
-            }
+            let postString = "username=\(userEmail!)&password=\(userPassword!)";
+            request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding);
             
-            var myJSON: NSDictionary?;
-            do {
+            let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
+                (data, response, error) in
                 
-                myJSON = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as? NSDictionary;
-                
-            }
-            catch {
-                // failure
-                print("Fetch failed: \((error as NSError).localizedDescription)")
-            }
-            
-            if let parseJSON = myJSON {
-                let resultValue = parseJSON["success"] as? Int
-                print("result: \(resultValue)");
-                
-                if(resultValue! == 1)// 1 if successful, 0 if not successful
+                if (error != nil)
                 {
-                    NSUserDefaults.standardUserDefaults().setBool(true, forKey: "isUserLoggedIn")
-                    NSUserDefaults.standardUserDefaults().synchronize()
+                    print("error=\(error)")
+                    return
+                }
+                
+                var myJSON: NSDictionary?;
+                do {
+                    
+                    myJSON = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as? NSDictionary;
+                    
+                }
+                catch {
+                    // failure
+                    print("Fetch failed: \((error as NSError).localizedDescription)")
+                }
+                
+                if let parseJSON = myJSON {
+                    let resultValue = parseJSON["success"] as? Int
+                    print("result: \(resultValue)");
+                    
+                    if(resultValue! == 1)// 1 if successful, 0 if not successful
+                    {
+                        
+                        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "isUserLoggedIn")
+                        NSUserDefaults.standardUserDefaults().synchronize()
 
-                    self.dismissViewControllerAnimated(true, completion: nil)
+                        self.dismissViewControllerAnimated(true, completion: nil)
 
+                    }
+                    //else
+                    //{
+                      //  self.displayMyAlertMessage("Incorrect Login Credentials")
+                    //}
+                    
                 }
                 else
                 {
-                    self.displayMyAlertMessage("Incorrect Login Credentials")
+                    dispatch_async(dispatch_get_main_queue(), {
+                        
+                        // Display alert with confirmation.
+                        let myAlert = UIAlertController(title: "Alert", message: "Incorrect Login Credentials", preferredStyle: UIAlertControllerStyle.Alert);
+                        
+                        //let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil);
+                        let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default){ action in
+                            self.dismissViewControllerAnimated(true, completion: nil);
+                        }
+                        myAlert.addAction(okAction);
+                        
+                        self.presentViewController(myAlert, animated: true, completion: nil)
+                    })
+
                 }
                 
             }
-            else
-            {
-                dispatch_async(dispatch_get_main_queue(), {
-                    
-                    // Display alert with confirmation.
-                    let myAlert = UIAlertController(title: "Alert", message: "Incorrect Login Credentials", preferredStyle: UIAlertControllerStyle.Alert);
-                    
-                    let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil);
-                    
-                    myAlert.addAction(okAction);
-                    
-                    self.presentViewController(myAlert, animated: true, completion: nil)
-                })
-
-            }
-            
+            task.resume()
         }
-        
-        task.resume()
-        
     }
     
     

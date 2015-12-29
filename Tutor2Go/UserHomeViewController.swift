@@ -9,6 +9,8 @@
 import UIKit
 
 class UserHomeViewController: UIViewController {
+    
+    var tutorUsername: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,12 +30,13 @@ class UserHomeViewController: UIViewController {
             self.performSegueWithIdentifier("LoginViewSegue", sender: self);
         }
     }
+    
+    @IBAction func ReturnToUserHomeViewController(segue:UIStoryboardSegue) {
+    }
 
     @IBAction func LogoutButtonTapped(sender: AnyObject) {
         NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isUserLoggedIn")
         NSUserDefaults.standardUserDefaults().synchronize()
-        
-        self.performSegueWithIdentifier("LogoutToLoginSegue", sender: self);
     }
 
     

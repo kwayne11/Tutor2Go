@@ -12,6 +12,7 @@ class RegisterPageViewController: UIViewController {
     @IBOutlet var userEmailTextField: UITextField!
     @IBOutlet var userPasswordTextField: UITextField!
     @IBOutlet var repeatPasswordTextField: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,7 +23,6 @@ class RegisterPageViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
     @IBAction func registerButtonTapped(sender: AnyObject) {
         let userEmail = userEmailTextField.text;
@@ -96,10 +96,11 @@ class RegisterPageViewController: UIViewController {
                     
                     // Display alert with confirmation.
                     let myAlert = UIAlertController(title: "Alert", message: messageToDisplay, preferredStyle: UIAlertControllerStyle.Alert);
-                    
-                    let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil);
-                    
-                    myAlert.addAction(okAction);
+
+                    let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default){ action in
+                        self.dismissViewControllerAnimated(true, completion: nil);
+                    }
+                    myAlert.addAction(okAction)
                     
                     self.presentViewController(myAlert, animated: true, completion: nil)
                 })
@@ -108,13 +109,12 @@ class RegisterPageViewController: UIViewController {
             }
             
         }
-        
+
         task.resume()
         
-        
-        
         // Display confirmation message to user
-        displayMyAlertMessage("Registration is completed.  Thank you for registering!");
+        //displayMyAlertMessage("Registration is completed.  Thank you for registering!");
+        
     }
     
     func displayMyAlertMessage(msg: String) {
