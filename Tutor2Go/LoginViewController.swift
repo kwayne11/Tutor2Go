@@ -68,12 +68,17 @@ class LoginViewController: UIViewController {
                 
                 if let parseJSON = myJSON {
                     let resultValue = parseJSON["success"] as? Int
-                    print("result: \(resultValue)");
+                    print("result: \(resultValue!)");
+                    let dataArray : NSArray = parseJSON.valueForKey("User_Info") as! NSArray
+                    let tutorID: String? = dataArray[0].valueForKey("tutor_id") as? String
+
+                    print("tutorID: \(tutorID!)");
                     
                     if(resultValue! == 1)// 1 if successful, 0 if not successful
                     {
                         
                         NSUserDefaults.standardUserDefaults().setBool(true, forKey: "isUserLoggedIn")
+                        NSUserDefaults.standardUserDefaults().setObject(tutorID!, forKey: "tutorID")
                         NSUserDefaults.standardUserDefaults().synchronize()
 
                         self.dismissViewControllerAnimated(true, completion: nil)
