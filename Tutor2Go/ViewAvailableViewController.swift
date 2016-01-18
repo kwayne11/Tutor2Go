@@ -55,7 +55,7 @@ class ViewAvailableViewController: UIViewController, UITableViewDataSource, UITa
     
     func get_data_from_URL()
     {
-        let myURL = NSURL(string : "http://40.78.144.135/viewTechAvailable.php");
+        let myURL = NSURL(string : "http://40.122.160.224/viewTechAvailable.php");
         let request = NSMutableURLRequest(URL: myURL!);
         request.HTTPMethod = "POST";
         

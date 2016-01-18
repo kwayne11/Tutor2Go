@@ -15,6 +15,7 @@ class RegisterPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "ECU.PNG")!)
 
         // Do any additional setup after loading the view.
     }
@@ -46,7 +47,7 @@ class RegisterPageViewController: UIViewController {
         }
         
         // Store Data
-        let myURL = NSURL(string: "http://40.78.144.135/register.php");
+        let myURL = NSURL(string: "http://40.122.160.224/register.php");
         let request = NSMutableURLRequest(URL: myURL!);
         request.HTTPMethod = "POST";
         

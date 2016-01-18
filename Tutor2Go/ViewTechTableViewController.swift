@@ -56,7 +56,7 @@ class ViewTechViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func get_data_from_URL()
     {
-        let myURL = NSURL(string : "http://40.78.144.135/viewTechCheckedOut.php");
+        let myURL = NSURL(string : "http://40.122.160.224/viewTechCheckedOut.php");
         let request = NSMutableURLRequest(URL: myURL!);
         request.HTTPMethod = "POST";
         let TID = NSUserDefaults.standardUserDefaults().valueForKey("tutorID")

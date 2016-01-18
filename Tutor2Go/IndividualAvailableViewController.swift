@@ -29,7 +29,7 @@ class IndividualAvailableViewController: UIViewController {
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "Purple.png")!)
         self.ItemAvailableName.text = ItemString
         
-        let myURL = NSURL(string : "http://40.78.144.135/getAvailableTechID.php");
+        let myURL = NSURL(string : "http://40.122.160.224/getAvailableTechID.php");
         let request = NSMutableURLRequest(URL: myURL!);
         request.HTTPMethod = "POST";
         let TID : NSString! = "\(ItemString)"
@@ -109,7 +109,7 @@ class IndividualAvailableViewController: UIViewController {
         //Get ID for Item
         print(ItemID)
         
-        let myURL = NSURL(string : "http://40.78.144.135/CheckTechOut.php");
+        let myURL = NSURL(string : "http://40.122.160.224/CheckTechOut.php");
         let request = NSMutableURLRequest(URL: myURL!);
         request.HTTPMethod = "POST";
         let TID : NSString! = "\(ItemID)"

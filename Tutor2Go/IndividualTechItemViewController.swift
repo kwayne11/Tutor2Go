@@ -32,7 +32,7 @@ class IndividualTechItemViewController: UIViewController {
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "Purple.png")!)
         self.ItemName.text = ItemString
         
-        let myURL = NSURL(string : "http://40.78.144.135/getTechID.php");
+        let myURL = NSURL(string : "http://40.122.160.224/getTechID.php");
         let request = NSMutableURLRequest(URL: myURL!);
         request.HTTPMethod = "POST";
         let TID : NSString! = "\(ItemString)"
@@ -117,7 +117,7 @@ class IndividualTechItemViewController: UIViewController {
         //Get ID for Item
         print(ItemID)
         
-        let myURL = NSURL(string : "http://40.78.144.135/CheckTechIn.php");
+        let myURL = NSURL(string : "http://40.122.160.224/CheckTechIn.php");
         let request = NSMutableURLRequest(URL: myURL!);
         request.HTTPMethod = "POST";
         let TID : NSString! = "\(ItemID)"

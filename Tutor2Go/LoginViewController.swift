@@ -16,6 +16,7 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "ECU.PNG")!)
 
         // Do any additional setup after loading the view.
     }
@@ -39,7 +40,7 @@ class LoginViewController: UIViewController {
         }
         else
         {
-            let myURL = NSURL(string: "http://40.78.144.135/login.php");
+            let myURL = NSURL(string: "http://40.122.160.224/login.php");
             let request = NSMutableURLRequest(URL: myURL!);
             request.HTTPMethod = "POST";
             
