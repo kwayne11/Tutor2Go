@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import SCLAlertView
+import ANLongTapButton
 
 class IndividualAvailableViewController: UIViewController {
 
     @IBOutlet var ItemAvailableName: UILabel!
+    @IBOutlet var CheckItemOutButton:ANLongTapButton!
     //@IBOutlet var ItemName: UILabel!
-    @IBOutlet var CheckItemOutButton: UIButton!
+    //@IBOutlet var CheckItemOutButton: UIButton!
     
     var ItemString : String!
     var ItemID : String!
@@ -20,13 +23,13 @@ class IndividualAvailableViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
-        self.CheckItemOutButton.enabled = false
+        //self.CheckItemOutButton.enabled = false
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "Purple.png")!)
+        //self.view.backgroundColor = UIColor(patternImage: UIImage(named: "Purple.png")!)
         self.ItemAvailableName.text = ItemString
         
         let myURL = NSURL(string : "http://40.122.160.224/getAvailableTechID.php");
@@ -70,7 +73,7 @@ class IndividualAvailableViewController: UIViewController {
                         self.ItemID = techItem
  
                         dispatch_async(dispatch_get_main_queue()) {
-                            self.CheckItemOutButton.enabled = true
+                            //self.CheckItemOutButton.enabled = true
                         }
 
                         
@@ -103,82 +106,165 @@ class IndividualAvailableViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
-    @IBAction func CheckItemOutTapped(sender: AnyObject) {
-        
-        //Get ID for Item
-        print(ItemID)
-        
-        let myURL = NSURL(string : "http://40.122.160.224/CheckTechOut.php");
-        let request = NSMutableURLRequest(URL: myURL!);
-        request.HTTPMethod = "POST";
-        let TID : NSString! = "\(ItemID)"
-        let TuID = NSUserDefaults.standardUserDefaults().valueForKey("tutorID")
-        let postString = "tech_id=\(TID!)&tutor_id=\(TuID!)";
-        request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
-        
-        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
-            (data, response, error) in
+ 
+    @IBAction func onCheckItemOutTapped(longTapButton: ANLongTapButton)
+    {
+        longTapButton.didTimePeriodElapseBlock = { () -> Void in
+            let myURL = NSURL(string : "http://40.122.160.224/CheckTechOut.php");
+            let request = NSMutableURLRequest(URL: myURL!);
+            request.HTTPMethod = "POST";
+            let TID : NSString! = "\(self.ItemID)"
+            let TuID = NSUserDefaults.standardUserDefaults().valueForKey("tutorID")
+            let postString = "tech_id=\(TID!)&tutor_id=\(TuID!)";
+            request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
             
-            if (error != nil)
-            {
-                print("error=\(error)")
-                return
-            }
-            
-            var myJSON: NSDictionary?;
-            do {
+            let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
+                (data, response, error) in
                 
-                myJSON = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as? NSDictionary;
-                
-            }
-            catch {
-                // failure
-                print("Fetch failed: \((error as NSError).localizedDescription)")
-            }
-            
-            if let parseJSON = myJSON {
-                let resultValue = parseJSON["success"] as? Int
-                print("result: \(resultValue!)");
-                
-                if(resultValue! == 1)// 1 if successful, 0 if not successful
+                if (error != nil)
                 {
+                    print("error=\(error)")
+                    return
+                }
+                
+                var myJSON: NSDictionary?;
+                do {
                     
-                    let messageToDisplay:String = parseJSON["message"] as! String;
+                    myJSON = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as? NSDictionary;
                     
+                }
+                catch {
+                    // failure
+                    print("Fetch failed: \((error as NSError).localizedDescription)")
+                }
+                
+                if let parseJSON = myJSON {
+                    let resultValue = parseJSON["success"] as? Int
+                    print("result: \(resultValue!)");
+                    
+                    if(resultValue! == 1)// 1 if successful, 0 if not successful
+                    {
+                        
+                        //let messageToDisplay:String = parseJSON["message"] as! String;
+                        
+                        dispatch_async(dispatch_get_main_queue(), {
+                            SCLAlertView().showNotice("Success!", subTitle: "You have checked out '\(self.ItemString)'") // Notice
+                            self.dismissViewControllerAnimated(true, completion: nil)
+                            /*
+                            // Display alert with confirmation.
+                            let myAlert = UIAlertController(title: "Alert", message: messageToDisplay, preferredStyle: UIAlertControllerStyle.Alert);
+                            
+                            let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default){ action in
+                            self.dismissViewControllerAnimated(true, completion: nil);
+                            }
+                            myAlert.addAction(okAction)
+                            
+                            self.presentViewController(myAlert, animated: true, completion: nil)
+                            */
+                        })
+                    }
+                }
+                else
+                {
                     dispatch_async(dispatch_get_main_queue(), {
                         
                         // Display alert with confirmation.
-                        let myAlert = UIAlertController(title: "Alert", message: messageToDisplay, preferredStyle: UIAlertControllerStyle.Alert);
-                        
+                        let myAlert = UIAlertController(title: "Alert", message: "No Technology Checked Out", preferredStyle: UIAlertControllerStyle.Alert);
                         let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default){ action in
                             self.dismissViewControllerAnimated(true, completion: nil);
                         }
-                        myAlert.addAction(okAction)
+                        myAlert.addAction(okAction);
                         
                         self.presentViewController(myAlert, animated: true, completion: nil)
                     })
+                    
                 }
-            }
-            else
-            {
-                dispatch_async(dispatch_get_main_queue(), {
-                    
-                    // Display alert with confirmation.
-                    let myAlert = UIAlertController(title: "Alert", message: "No Technology Checked Out", preferredStyle: UIAlertControllerStyle.Alert);
-                    let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default){ action in
-                        self.dismissViewControllerAnimated(true, completion: nil);
-                    }
-                    myAlert.addAction(okAction);
-                    
-                    self.presentViewController(myAlert, animated: true, completion: nil)
-                })
                 
             }
-            
+            task.resume()
         }
-        task.resume()
     }
+    
+    
+    
+//    @IBAction func CheckItemOutTapped(sender: AnyObject) {
+//        
+//        //Get ID for Item
+//        print(ItemID)
+//        
+//        let myURL = NSURL(string : "http://40.122.160.224/CheckTechOut.php");
+//        let request = NSMutableURLRequest(URL: myURL!);
+//        request.HTTPMethod = "POST";
+//        let TID : NSString! = "\(ItemID)"
+//        let TuID = NSUserDefaults.standardUserDefaults().valueForKey("tutorID")
+//        let postString = "tech_id=\(TID!)&tutor_id=\(TuID!)";
+//        request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
+//        
+//        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
+//            (data, response, error) in
+//            
+//            if (error != nil)
+//            {
+//                print("error=\(error)")
+//                return
+//            }
+//            
+//            var myJSON: NSDictionary?;
+//            do {
+//                
+//                myJSON = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as? NSDictionary;
+//                
+//            }
+//            catch {
+//                // failure
+//                print("Fetch failed: \((error as NSError).localizedDescription)")
+//            }
+//            
+//            if let parseJSON = myJSON {
+//                let resultValue = parseJSON["success"] as? Int
+//                print("result: \(resultValue!)");
+//                
+//                if(resultValue! == 1)// 1 if successful, 0 if not successful
+//                {
+//                    
+//                    //let messageToDisplay:String = parseJSON["message"] as! String;
+//                    
+//                    dispatch_async(dispatch_get_main_queue(), {
+//                        SCLAlertView().showNotice("Success!", subTitle: "You have checked out this piece of technology.") // Notice
+//                        self.dismissViewControllerAnimated(true, completion: nil)
+//                        /*
+//                        // Display alert with confirmation.
+//                        let myAlert = UIAlertController(title: "Alert", message: messageToDisplay, preferredStyle: UIAlertControllerStyle.Alert);
+//                        
+//                        let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default){ action in
+//                            self.dismissViewControllerAnimated(true, completion: nil);
+//                        }
+//                        myAlert.addAction(okAction)
+//                        
+//                        self.presentViewController(myAlert, animated: true, completion: nil)
+//                        */
+//                    })
+//                }
+//            }
+//            else
+//            {
+//                dispatch_async(dispatch_get_main_queue(), {
+//                    
+//                    // Display alert with confirmation.
+//                    let myAlert = UIAlertController(title: "Alert", message: "No Technology Checked Out", preferredStyle: UIAlertControllerStyle.Alert);
+//                    let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default){ action in
+//                        self.dismissViewControllerAnimated(true, completion: nil);
+//                    }
+//                    myAlert.addAction(okAction);
+//                    
+//                    self.presentViewController(myAlert, animated: true, completion: nil)
+//                })
+//                
+//            }
+//            
+//        }
+//        task.resume()
+//    }
     
     
     /*

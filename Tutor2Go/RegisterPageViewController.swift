@@ -5,8 +5,9 @@
 //  Created by Kevin Wayne on 12/22/15.
 //  Copyright © 2015 Kevin Wayne. All rights reserved.
 //
-
+//import SCLAlertView
 import UIKit
+import SCLAlertView
 
 class RegisterPageViewController: UIViewController {
     @IBOutlet var userEmailTextField: UITextField!
@@ -15,7 +16,7 @@ class RegisterPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "ECU.PNG")!)
+        //self.view.backgroundColor = UIColor(patternImage: UIImage(named: "ECU.PNG")!)
 
         // Do any additional setup after loading the view.
     }
@@ -87,14 +88,14 @@ class RegisterPageViewController: UIViewController {
                     isUserRegistered = true;
                 }
                 
-                var messageToDisplay:String = parseJSON["message"] as! String;
+                //var messageToDisplay:String = parseJSON["message"] as! String;
                 if(!isUserRegistered)
                 {
-                    messageToDisplay = parseJSON["message"] as! String;
+                    //messageToDisplay = parseJSON["message"] as! String;
                 }
                 
                 dispatch_async(dispatch_get_main_queue(), {
-                    
+                    /*
                     // Display alert with confirmation.
                     let myAlert = UIAlertController(title: "Alert", message: messageToDisplay, preferredStyle: UIAlertControllerStyle.Alert);
 
@@ -104,6 +105,9 @@ class RegisterPageViewController: UIViewController {
                     myAlert.addAction(okAction)
                     
                     self.presentViewController(myAlert, animated: true, completion: nil)
+                    */
+                    SCLAlertView().showSuccess("Account Created!", subTitle: "Thank you for registering.")
+                    self.dismissViewControllerAnimated(true, completion: nil)
                 })
                 
                 

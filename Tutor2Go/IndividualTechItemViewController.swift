@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import SCLAlertView
+import ANLongTapButton
 
 class IndividualTechItemViewController: UIViewController {
 
     @IBOutlet var ItemName: UILabel!
     @IBOutlet var TimeCheckedOut: UILabel!
-    @IBOutlet var CheckItemInButton: UIButton!
+    @IBOutlet var CheckItemInButton: ANLongTapButton!
+    //@IBOutlet var CheckItemInButton: UIButton!
     
     var ItemString : String!
     var ItemID : String!
@@ -20,7 +23,7 @@ class IndividualTechItemViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
-        self.CheckItemInButton.enabled = false
+        //self.CheckItemInButton.enabled = false
         
         
 
@@ -29,7 +32,7 @@ class IndividualTechItemViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "Purple.png")!)
+        //self.view.backgroundColor = UIColor(patternImage: UIImage(named: "Purple.png")!)
         self.ItemName.text = ItemString
         
         let myURL = NSURL(string : "http://40.122.160.224/getTechID.php");
@@ -79,7 +82,7 @@ class IndividualTechItemViewController: UIViewController {
                         
                         dispatch_async(dispatch_get_main_queue()) {
                             self.TimeCheckedOut.text = "Time Checked Out: \(self.DateCheckedOut) "
-                            self.CheckItemInButton.enabled = true
+                            //self.CheckItemInButton.enabled = true
                         }
                         
                     }
@@ -103,7 +106,7 @@ class IndividualTechItemViewController: UIViewController {
             
         }
         task.resume()
-        self.CheckItemInButton.enabled = true
+        //self.CheckItemInButton.enabled = true
         
         // Do any additional setup after loading the view.
     }
@@ -113,79 +116,81 @@ class IndividualTechItemViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func CheckItemInTapped(sender: AnyObject) {
-        //Get ID for Item
-        print(ItemID)
+    @IBAction func OnCheckItemInButtonPressed(longTapButton: ANLongTapButton) {
         
-        let myURL = NSURL(string : "http://40.122.160.224/CheckTechIn.php");
-        let request = NSMutableURLRequest(URL: myURL!);
-        request.HTTPMethod = "POST";
-        let TID : NSString! = "\(ItemID)"
-        let postString = "tech_id=\(TID!)";
-        request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
-        
-        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
-            (data, response, error) in
+        longTapButton.didTimePeriodElapseBlock = { () -> Void in
+            let myURL = NSURL(string : "http://40.122.160.224/CheckTechIn.php");
+            let request = NSMutableURLRequest(URL: myURL!);
+            request.HTTPMethod = "POST";
+            let TID : NSString! = "\(self.ItemID)"
+            let postString = "tech_id=\(TID!)";
+            request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
             
-            if (error != nil)
-            {
-                print("error=\(error)")
-                return
-            }
-            
-            var myJSON: NSDictionary?;
-            do {
+            let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
+                (data, response, error) in
                 
-                myJSON = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as? NSDictionary;
-                
-            }
-            catch {
-                // failure
-                print("Fetch failed: \((error as NSError).localizedDescription)")
-            }
-            
-            if let parseJSON = myJSON {
-                let resultValue = parseJSON["success"] as? Int
-                print("result: \(resultValue!)");
-                
-                if(resultValue! == 1)// 1 if successful, 0 if not successful
+                if (error != nil)
                 {
+                    print("error=\(error)")
+                    return
+                }
+                
+                var myJSON: NSDictionary?;
+                do {
                     
-                    let messageToDisplay:String = parseJSON["message"] as! String;
+                    myJSON = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as? NSDictionary;
                     
+                }
+                catch {
+                    // failure
+                    print("Fetch failed: \((error as NSError).localizedDescription)")
+                }
+                
+                if let parseJSON = myJSON {
+                    let resultValue = parseJSON["success"] as? Int
+                    print("result: \(resultValue!)");
+                    
+                    if(resultValue! == 1)// 1 if successful, 0 if not successful
+                    {
+                        
+                        //let messageToDisplay:String = parseJSON["message"] as! String;
+                        
+                        dispatch_async(dispatch_get_main_queue(), {
+                            SCLAlertView().showNotice("Success!", subTitle: "You have checked back in '\(self.ItemString)'") // Notice
+                            self.dismissViewControllerAnimated(true, completion: nil)
+                            /*
+                            // Display alert with confirmation.
+                            let myAlert = UIAlertController(title: "Alert", message: messageToDisplay, preferredStyle: UIAlertControllerStyle.Alert);
+                            
+                            let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default){ action in
+                            self.dismissViewControllerAnimated(true, completion: nil);
+                            }
+                            myAlert.addAction(okAction)
+                            
+                            self.presentViewController(myAlert, animated: true, completion: nil)
+                            */
+                        })
+                    }
+                }
+                else
+                {
                     dispatch_async(dispatch_get_main_queue(), {
                         
                         // Display alert with confirmation.
-                        let myAlert = UIAlertController(title: "Alert", message: messageToDisplay, preferredStyle: UIAlertControllerStyle.Alert);
-                        
+                        let myAlert = UIAlertController(title: "Alert", message: "No Technology Checked Out", preferredStyle: UIAlertControllerStyle.Alert);
                         let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default){ action in
                             self.dismissViewControllerAnimated(true, completion: nil);
                         }
-                        myAlert.addAction(okAction)
+                        myAlert.addAction(okAction);
                         
                         self.presentViewController(myAlert, animated: true, completion: nil)
                     })
+                    
                 }
-            }
-            else
-            {
-                dispatch_async(dispatch_get_main_queue(), {
-                    
-                    // Display alert with confirmation.
-                    let myAlert = UIAlertController(title: "Alert", message: "No Technology Checked Out", preferredStyle: UIAlertControllerStyle.Alert);
-                    let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default){ action in
-                        self.dismissViewControllerAnimated(true, completion: nil);
-                    }
-                    myAlert.addAction(okAction);
-                    
-                    self.presentViewController(myAlert, animated: true, completion: nil)
-                })
                 
             }
-            
+            task.resume()
         }
-        task.resume()
-        
     }
     
     /*

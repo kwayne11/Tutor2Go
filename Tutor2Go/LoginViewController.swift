@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SCLAlertView
 
 class LoginViewController: UIViewController {
 
@@ -16,7 +17,7 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "ECU.PNG")!)
+        //self.view.backgroundColor = UIColor(patternImage: UIImage(named: "ECU.PNG")!)
 
         // Do any additional setup after loading the view.
     }
@@ -36,7 +37,8 @@ class LoginViewController: UIViewController {
         // Check if both text fields were filled out
         if(userEmail!.isEmpty || userPassword!.isEmpty)
         {
-            displayMyAlertMessage("Please fill in both the Pirate ID and Password!")
+            //displayMyAlertMessage("Please fill in both the Pirate ID and Password!")
+            SCLAlertView().showError("Login Error", subTitle: "Please fill in both the Pirate ID and Password") // Error
         }
         else
         {
@@ -87,7 +89,7 @@ class LoginViewController: UIViewController {
                     }
                     //else
                     //{
-                      //  self.displayMyAlertMessage("Incorrect Login Credentials")
+                        //SCLAlertView().showError("Login Error", subTitle: "Please fill in both the Pirate ID and Password") // Error
                     //}
                     
                 }
